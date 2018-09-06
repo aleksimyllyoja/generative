@@ -27,6 +27,7 @@ sincos = lambda path, m, a: [[p[0]+cos(pi2/len(path)*i*a)*m, p[1]+sin(pi2/len(pa
 splitxsys = lambda ps: (np.array([p[0] for p in ps]), np.array([p[1] for p in ps]))
 bpns = lambda ps, n=1000: np.array([bernstein(i, len(ps)-1, np.linspace(0.0, 1.0, n)) for i in range(0, len(ps))])
 bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
+objvs = lambda fn: [list(map(float, list(filter(None, l.replace('\n', '').split(' ')))[1:])) for l in open(fn).readlines() if l.startswith('v ')]
 
 # magic numbers yo
 def plot_paths(paths, width=300, height=218, s=3):
@@ -44,3 +45,16 @@ def plot_paths(paths, width=300, height=218, s=3):
 
     cv2.imshow('', img)
     if cv2.waitKey(): cv2.destroyAllWindows()
+
+def rotate3_m(axis, theta):
+    axis = np.asarray(axis)
+    axis = axis / sqrt(np.dot(axis, axis))
+    a = cos(theta / 2.0)
+    b, c, d = -axis * sin(theta / 2.0)
+    aa, bb, cc, dd = a * a, b * b, c * c, d * d
+    bc, ad, ac, ab, bd, cd = b * c, a * d, a * c, a * b, b * d, c * d
+    return np.array([[aa + bb - cc - dd, 2 * (bc + ad), 2 * (bd - ac)],
+                     [2 * (bc - ad), aa + cc - bb - dd, 2 * (cd + ab)],
+                     [2 * (bd + ac), 2 * (cd - ab), aa + dd - bb - cc]])
+
+rot3 = lambda path, axis, theta: list(map(lambda p: np.dot(rotate3_m(axis, theta), p), path))
