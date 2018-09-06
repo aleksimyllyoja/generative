@@ -6,7 +6,12 @@ H = 218
 
 paths = []
 
-stem = bezier([[W/2, 40], [W/3, H/3], [2*W/3, 2*H/3], [W/2, H-40]])
+stem = bezier([
+    [W/2, 40],
+    [W/3, H/3],
+    [2*W/3, 2*H/3],
+    [W/2, H-40]
+])
 
 def leaf(x, y, a=1.2):
 
@@ -33,11 +38,10 @@ def leaf(x, y, a=1.2):
     return move(l, dx, dy)
 
 paths.append(stem)
-#for i in range(10):
 paths.append(leaf(*stem[900], 1.5))
-paths.append(leaf(*stem[680], 1.2))
-paths.append(leaf(*stem[600]))
-paths.append(leaf(*stem[500]))
+paths.append(leaf(*stem[850], 1.2))
+paths.append(leaf(*stem[800]))
+paths.append(leaf(*stem[750]))
 
 paths.append(
     sincos(ellipse(*stem[-1], 20, 10), 1.2, 2)
