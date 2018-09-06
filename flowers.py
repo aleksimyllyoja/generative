@@ -13,8 +13,7 @@ stem = bezier([
     [W/2, H-40]
 ])
 
-def leaf(x, y, a=1.2):
-
+def leaf(x, y, a=2.5):
     def frame(j, w, h):
         return [
             [0, 0], [w, 0],
@@ -27,7 +26,7 @@ def leaf(x, y, a=1.2):
         10,
         120
     )
-    b = rotate(skewy(b, 2), a)
+    b = rotate(skewy(b, 1), a)
 
     l = bezier([b[2], b[0], b[3], b[4], b[1], b[2]])
     l = sincos(l, 1.2, 2)
@@ -38,10 +37,7 @@ def leaf(x, y, a=1.2):
     return move(l, dx, dy)
 
 paths.append(stem)
-paths.append(leaf(*stem[900], 1.5))
-paths.append(leaf(*stem[850], 1.2))
-paths.append(leaf(*stem[800]))
-paths.append(leaf(*stem[750]))
+paths.append(leaf(*stem[450]))
 
 paths.append(
     sincos(ellipse(*stem[-1], 20, 10), 1.2, 2)

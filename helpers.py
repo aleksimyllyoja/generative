@@ -6,8 +6,9 @@ from math import *
 pi2 = 2*pi
 extendz = lambda p: [p[0], p[1], 1]
 take2 = lambda p: [p[0], p[1]]
+mt2 = lambda ps: list(map(take2, ps))
 mapm = lambda m, ps: list(map(lambda p: np.matmul(m, p), ps))
-map3m = lambda m, ps: list(map(take2, map(lambda p: np.matmul(m, extendz(p)), ps)))
+map3m = lambda m, ps: mt2(map(lambda p: np.matmul(m, extendz(p)), ps))
 skewx_m = lambda a: np.array([[1, tan(a), 0], [0, 1, 0], [0, 0, 1]])
 skewy_m = lambda a: np.array([[1, 0, 0], [tan(a), 1, 0], [0, 0, 1]])
 rotate_m = lambda a: np.array([[cos(a), -sin(a)], [sin(a), cos(a)]])
@@ -25,7 +26,7 @@ ellipse = lambda x, y, r1, r2, p=100: [[x+r1*cos((2*pi)/p*i), y+r2*sin((2*pi)/p*
 sincos = lambda path, m, a: [[p[0]+cos(pi2/len(path)*i*a)*m, p[1]+sin(pi2/len(path)*i*a)*m] for i, p in enumerate(path)]
 splitxsys = lambda ps: (np.array([p[0] for p in ps]), np.array([p[1] for p in ps]))
 bpns = lambda ps, n=1000: np.array([bernstein(i, len(ps)-1, np.linspace(0.0, 1.0, n)) for i in range(0, len(ps))])
-bezier = lambda ps, n=1000: list(map(take2, zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n))))
+bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
 
 # magic numbers yo
 def plot_paths(paths, width=300, height=218, s=3):
