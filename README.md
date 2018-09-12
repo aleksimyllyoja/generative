@@ -1,5 +1,8 @@
 # Graphics stuff
 
+## cow.py
+![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/cow.png)
+
 ## objs.py
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/objs.png)
 
@@ -17,3 +20,6 @@
 
 ## gingerbreadman.py
 ![gingerbreadman.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/gingerbreadman.png)
+
+
+* obj files: https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
