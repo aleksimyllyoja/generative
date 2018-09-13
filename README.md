@@ -1,5 +1,8 @@
 # Graphics stuff
 
+## faces.py
+![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/faces.png)
+
 ## cow.py
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/cow.png)
 

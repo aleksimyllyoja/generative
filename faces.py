@@ -8,42 +8,48 @@ H = 218
 paths = []
 
 def mouth(x, y, w, h):
-    cw = w/8.0
     hw = w/2.0
     hh = h/2.0
 
+    cw = w*randint(5, 30)/100.0
+    cbh = hh*randint(3, 80)/100.0
+
+    vp = y+(random()-.8)*hh
+
     ull = bezier([
-        [x-hw, y],
+        [x-hw, vp],
         [x-cw*2.0, y-hh],
         [x-cw, y-hh]
     ])
 
+    # cupid's bow
     cb = bezier([
         [x-cw, y-hh],
-        [x, y-hh*.2],
+        [x, y-cbh],
         [x+cw, y-hh]
     ])
 
     ulr = bezier([
         [x+cw, y-hh],
         [x+cw*2.0, y-hh],
-        [x+hw, y]
+        [x+hw, vp]
     ])
 
     ul = ulr+cb+ull
 
     ll = bezier([
-        [x-hw, y],
+        [x-hw, vp],
         [x, y+hh*1.3],
-        [x+hw, y],
+        [x+hw, vp],
     ])
 
+    # center line
     c = bezier([
-        [x-hw, y],
+        [x-hw, vp],
         [x-hw/9, y-hh*.5],
         [x, y+hh/2.0],
         [x+hw/9, y-hh*.5],
-        [x+hw, y]
+        [x+hw, vp]
     ])
 
     return [ll, ul, c]
@@ -78,10 +84,12 @@ def nose(x, y, w, h):
         [x+w/2.0, y]
     ])
 
+ormo = lambda : 1 if random() < 0.5 else -1
+
 def face(x, y, r):
 
     ew = r/(randint(200, 300)/100.0) # eye width
-    eh = r/(randint(200, 480)/100.0) # eye height
+    eh = r/(randint(200, 880)/100.0) # eye height
 
     jw = randint(40, 90)/100.0  # jaw width
     jb = randint(110, 140)/100.0 # jaw bend
@@ -95,6 +103,10 @@ def face(x, y, r):
 
     mh = ew*randint(5, 100)/100.0 # mouth height
     mw = ew*randint(80, 200)/100.0 # mouth width
+
+    np = (y+r/4.0)+(random()-.5)*eh*0.2
+    nw = ew*randint(30, 80)/100.0
+    nh = ew*randint(10, 30)/100.0
 
     jlb = x-r*jw
     jrb = x+r*jw
@@ -136,19 +148,21 @@ def face(x, y, r):
         ])
     )
 
-    paths.append(nose(x, y+r/3.0, ew/2.0, ew/5.0))
+    paths.append(nose(x, np, nw, nh))
 
     paths.extend(eye(x-edx, y+edy, ew, eh))
     paths.extend(eye(x+edx, y+edy, ew, eh))
 
     paths.extend(mouth(x, y+r/1.66, mw, mh))
 
-w = 30
-for j in range(3):
-    for i in range(4):
-        face(40+i*w*2.4, 40+j*w*2.2, w)
 
+def draw_many():
+    w = 30
+    for j in range(3):
+        for i in range(4):
+            face(40+i*w*2.4, 40+j*w*2.2, w)
 #paths.append(fcircle(W/2, H/2, 10))
+draw_many()
 #face(W/2, H/2, 100)
 
 plot_paths(paths)
