@@ -1,6 +1,6 @@
 # Graphics stuff
 
-## faces.py
+## faces.py - very realistic looking faces for lizard people
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/faces.png)
 
 ## cow.py
