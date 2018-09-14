@@ -15,10 +15,10 @@ height = 218
 
 paths = []
 
-rc = 5
-cc = 3
+rc = 8
+cc = 6
 
-m = 30
+m = 20
 bw = (width-(rc+1)*m)/rc
 bh = (height-(cc+1)*m)/cc
 
@@ -34,7 +34,7 @@ for i in range(cc):
             p4 = b[3]
             p3 = b[4]
 
-            paths.append(bezier(b[:random.randint(2, 5)]))
+            paths.append(bezier(b[:random.randint(2, 4)]))
             paths.append([p1, p2])
 
             if random.random() > 0.85:
