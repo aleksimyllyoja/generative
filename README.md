@@ -1,5 +1,8 @@
 # Graphics stuff
 
+## perlin.py - depth contours
+![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/perlin.png)
+
 ## faces.py - very realistic looking faces for lizard people
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/faces.png)
 

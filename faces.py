@@ -166,3 +166,9 @@ draw_many()
 #face(W/2, H/2, 100)
 
 plot_paths(paths)
+
+# todo
+# * eyebrows
+# * better eyes
+# * open mouths
+# * ears
