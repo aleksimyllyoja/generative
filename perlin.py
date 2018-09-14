@@ -31,7 +31,7 @@ def flayer(t):
     img = fimg(t)
     image = cv2.cvtColor(img.copy(), cv2.COLOR_RGB2GRAY)
     image, contours, hierarchy = cv2.findContours(image.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for contour in contours:
+    for contour in contours[:10]:
         peri = cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, 0.01 * peri, True)
         area = cv2.contourArea(contour)
@@ -39,12 +39,15 @@ def flayer(t):
         if area > (W*H)/2.0 or area < 100: continue
 
         ps = [[c[0][0], c[0][1]] for c in contour]
+
+        if any(p[0]>=(W-1) or p[1]>=(H-1) or p[0]<1 or p[1]<1 for p in ps): continue
+
         ps.append(ps[0])
         pss.append(ps)
     return pss
 
 paths = []
-b = 0.1
-for i in range(100):
-    paths.extend(flayer(b-i/20.0))
+b = 0.9
+for i in range(200):
+    paths.extend(flayer(b-i/100.0))
 plot_paths(paths)
