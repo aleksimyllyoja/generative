@@ -30,6 +30,7 @@ bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np
 objvs = lambda fn: [list(map(float, list(filter(None, l.replace('\n', '').split(' ')))[1:])) for l in open(fn).readlines() if l.startswith('v ')]
 
 # magic numbers yo
+
 def plot_paths(paths, width=300, height=218, s=3):
     img = np.zeros((height*s, width*s, 3), np.uint8)
     img[:,:] = (255, 255, 255)

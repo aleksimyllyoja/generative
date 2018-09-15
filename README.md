@@ -1,5 +1,8 @@
 # Graphics stuff
 
+## planets.py
+![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/planets.png)
+
 ## perlin.py - depth contours
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/perlin.png)
 
