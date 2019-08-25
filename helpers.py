@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import itertools
 from scipy.misc import comb
 from math import *
 
@@ -35,17 +36,20 @@ def plot_paths(paths, width=300, height=218, s=3):
     img = np.zeros((height*s, width*s, 3), np.uint8)
     img[:,:] = (255, 255, 255)
     paths = list(map(lambda ps: scale(ps, s), paths))
-
-    for path in paths:
-        for p1, p2 in zip(path, path[1:]):
-            cv2.line(img,
-                (int(p1[0]), int(p1[1])),
-                (int(p2[0]), int(p2[1])),
-                (0,0,0)
-            )
-
+    img = plot_paths_on_image(paths, img)
     cv2.imshow('', img)
     if cv2.waitKey(): cv2.destroyAllWindows()
+
+def plot_paths_on_image(paths, image, color=(0,0,0), thickness=1):
+    for path in paths:
+        for p1, p2 in zip(path, path[1:]):
+            cv2.line(image,
+                (int(p1[0]), int(p1[1])),
+                (int(p2[0]), int(p2[1])),
+                (0,0,0), thickness=thickness
+            )
+
+    return image
 
 def rotate3_m(axis, theta):
     axis = np.asarray(axis)
@@ -59,3 +63,42 @@ def rotate3_m(axis, theta):
                      [2 * (bd + ac), 2 * (cd - ab), aa + dd - bb - cc]])
 
 rot3 = lambda path, axis, theta: list(map(lambda p: np.dot(rotate3_m(axis, theta), p), path))
+
+def grid(frame, width=1080, height=720, rows=3, cols=4, margin=5):
+
+    background = np.zeros([height, width, 3], np.uint8)
+
+    cell_width, herr = divmod(width-margin*(cols+1), cols)
+    cell_height, werr = divmod(height-margin*(rows+1), rows)
+
+    cells = itertools.product(range(cols), range(rows))
+
+    frame = cv2.resize(frame, (cell_width, cell_height))
+
+    #print(cell_width, cell_height, frame.shape)
+
+    for (x, y) in cells:
+        x0 = cell_width*x+margin*(x+1)
+        x1 = cell_width*(x+1)+margin*(x+1)
+
+        y0 = cell_height*y+margin*(y+1)
+        y1 = cell_height*(y+1)+margin*(y+1)
+
+        #print(x0, x1, y0, y1)
+        #breakpoint()
+        background[y0:y1, x0:x1] = frame
+
+    return background
+
+def color_map(frame, color_map=2):
+    return cv2.applyColorMap(frame, color_map)
+
+def grayscale(frame):
+    return np.stack((cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), )*3, axis=-1)
+
+def canny(frame, a=50, b=150):
+    return np.stack((cv2.Canny(frame, a, b), )*3, axis=-1)
+
+def morph(frame, kernel=(10, 10)):
+    kernel = np.ones(kernel, np.uint8)
+    return cv2.morphologyEx(frame, cv2.MORPH_OPEN, kernel)
