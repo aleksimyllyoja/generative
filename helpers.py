@@ -4,6 +4,8 @@ import itertools
 from scipy.misc import comb
 from math import *
 
+
+#midpoint
 pi2 = 2*pi
 extendz = lambda p: [p[0], p[1], 1]
 take2 = lambda p: [p[0], p[1]]
@@ -22,7 +24,7 @@ move = lambda path, x, y: [[p[0]+x, p[1]+y] for p in path]
 scale = lambda path, s: [[p[0]*s, p[1]*s] for p in path]
 gingerbreadman = lambda x, y: [1-y+abs(x), x]
 tinkerbell = lambda x, y, a=.9, b=(-.6013), c=2, d=.5: [x**2-y**2-a*x+b*y, 2*x*y+c*x+d*y]
-circle = lambda x, y, r, p=100: [[x+r*cos((2*pi)/p*i), y+r*sin((2*pi)/p*i)] for i in range(0, p+1)]
+circle = lambda x, y, r, p=100, ph=0: [[x+r*cos((2*pi)/p*i+ph), y+r*sin((2*pi)/p*i+ph)] for i in range(0, p+1)]
 ellipse = lambda x, y, r1, r2, p=100: [[x+r1*cos((2*pi)/p*i), y+r2*sin((2*pi)/p*i)] for i in range(0, p+1)]
 sincos = lambda path, m, a: [[p[0]+cos(pi2/len(path)*i*a)*m, p[1]+sin(pi2/len(path)*i*a)*m] for i, p in enumerate(path)]
 splitxsys = lambda ps: (np.array([p[0] for p in ps]), np.array([p[1] for p in ps]))
@@ -46,7 +48,7 @@ def plot_paths_on_image(paths, image, color=(0,0,0), thickness=1):
             cv2.line(image,
                 (int(p1[0]), int(p1[1])),
                 (int(p2[0]), int(p2[1])),
-                (0,0,0), thickness=thickness
+                color, thickness=thickness
             )
 
     return image
