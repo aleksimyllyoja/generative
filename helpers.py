@@ -1,8 +1,9 @@
 import numpy as np
 import cv2
 import itertools
-from scipy.misc import comb
+from scipy.special import comb
 from math import *
+from scipy import ndimage
 
 
 #midpoint
@@ -29,17 +30,20 @@ ellipse = lambda x, y, r1, r2, p=100: [[x+r1*cos((2*pi)/p*i), y+r2*sin((2*pi)/p*
 sincos = lambda path, m, a: [[p[0]+cos(pi2/len(path)*i*a)*m, p[1]+sin(pi2/len(path)*i*a)*m] for i, p in enumerate(path)]
 splitxsys = lambda ps: (np.array([p[0] for p in ps]), np.array([p[1] for p in ps]))
 bpns = lambda ps, n=1000: np.array([bernstein(i, len(ps)-1, np.linspace(0.0, 1.0, n)) for i in range(0, len(ps))])
-bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
+bezier = lambda ps, n=200: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
 objvs = lambda fn: [list(map(float, list(filter(None, l.replace('\n', '').split(' ')))[1:])) for l in open(fn).readlines() if l.startswith('v ')]
 
 # magic numbers yo
 
-def plot_paths(paths, width=300, height=218, s=3):
+def plot_paths(paths, width=300, height=218, s=3, r=True):
     img = np.zeros((height*s, width*s, 3), np.uint8)
     img[:,:] = (255, 255, 255)
     paths = list(map(lambda ps: scale(ps, s), paths))
     img = plot_paths_on_image(paths, img)
-    cv2.imshow('', img)
+    if r:
+        cv2.imshow('image', ndimage.rotate(img, 90))
+    else:
+        cv2.imshow('image', img)
     if cv2.waitKey(): cv2.destroyAllWindows()
 
 def plot_paths_on_image(paths, image, color=(0,0,0), thickness=1):
