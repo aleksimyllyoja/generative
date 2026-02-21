@@ -1,12 +1,12 @@
-# Graphics stuff
+# Graphics
 
 ## planets.py
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/planets.png)
 
-## perlin.py - depth contours
+## perlin.py
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/perlin.png)
 
-## faces.py - very realistic looking faces for lizard people
+## faces.py
 ![objs.py](https://raw.githubusercontent.com/aleksimyllyoja/generative/master/img/faces.png)
 
 ## cow.py
